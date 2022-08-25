@@ -1,4 +1,4 @@
-b.,jnb,.n#include<iostream>
+#include<iostream>
 
 //#define GLEW_STATIC
 
@@ -15,7 +15,7 @@ const GLchar* vertexShaderSource =
 	"layout (location = 0) in vec3 position;\n"
 	"void main()\n"
 	"{\n"
-	"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"
+	"gl_Position = vec4(position.x, position.y, position.z, 1.0);\n"//X,Y,Z vector w --> si 1 simboliza posicion, 0 direccion en nuestro espacio vectorial
 	"}\0" 
 };
 const GLchar* fragmentShaderSource = 
@@ -24,7 +24,7 @@ const GLchar* fragmentShaderSource =
 	"out vec4 color;\n"
 	"void main()\n"
 	"{\n"
-	"color = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+	"color = vec4(0.67f,0.2f,0.93f, 1.0f);\n" //color del triangulo
 	"}\n\0"
 };
 
@@ -79,27 +79,27 @@ int main() {
 	// Define las dimensiones del viewport
 	glViewport(0, 0, screenWidth, screenHeight);
 
-	//CrearShader();
+	CrearShader();//Tipo entero no asignado de tipo GL
 
 	// Set up vertex data (and buffer(s)) and attribute pointers
 	GLfloat vertices[] =
 	{
 		-0.5f, -0.5f, 0.0f, // Left
-		0.5f, -0.5f, 0.0f, // Right
+	
 		0.0f,  0.5f, 0.0f  // Top
 	};
 
 
 	GLuint VBO, VAO;
-	glGenVertexArrays(1, &VAO);
-	glGenBuffers(1, &VBO);
+	glGenVertexArrays(1, &VAO);//array
+	glGenBuffers(1, &VBO);//buffer
 	// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid *)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid *)0);//localidad, no total elemenmtos ...Corrimiento de memoria
 	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0); // Note that this is allowed, the call to glVertexAttribPointer registered VBO as the currently bound vertex buffer object so afterwards we can safely unbind
@@ -115,11 +115,12 @@ int main() {
 	while (!glfwWindowShouldClose(window))
 	{
 		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
-		glfwPollEvents();
 
-		// Render
-		// Clear the colorbuffer
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glfwPollEvents();//Checando eventos de usuario 
+
+		// Render//checando eventos de teclado
+		// Clear the colorbuffer// colores RGB red/green/blue colores normalizados 0-1, 0-1, 0-1 0 
+		glClearColor(0.27f, 0.91f, 0.86f, 1.0f);// color fondo glClearColor(0.83, 0.16, 0.96, 1.0f); https://www.tydac.ch/color/ 
 		glClear(GL_COLOR_BUFFER_BIT);
 
 
