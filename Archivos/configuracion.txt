@@ -1,0 +1,18 @@
+C++ --> Generadorl
+
+*Directorio de inclusion adicionales
+	$(SolutionDir)/External Libraries/GLEW/include
+	$(SolutionDir)/External Libraries/GLFW/include
+	$(SolutionDir)/External Libraries/glm
+
+
+
+Vinculador --> General
+
+*Additional Library Directories
+	$(SolutionDir)/External Libraries/GLEW/lib/Release/Win32
+	$(SolutionDir)/External Libraries/GLFW/lib-vc2015
+	$(SolutionDir)/External Libraries/glm
+
+*Entrada/Input
+opengl32.lib;glew32.lib;glfw3.lib;
