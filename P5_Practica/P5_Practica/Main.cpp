@@ -40,6 +40,8 @@ bool firstMouse = true;
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
+//For Keyboard
+float rot = 0.0f;
 
 
 int main( )
@@ -93,6 +95,10 @@ int main( )
     // Setup and compile our shaders
     Shader shader( "Shaders/modelLoading.vs", "Shaders/modelLoading.frag" );
     
+
+    Model pokearriba((char*)"Models/Pokeball/pokeArriba.obj");//ruta de mi modelo
+    Model pokeabajo((char*)"Models/Pokeball/pokeAbajo.obj");//ruta de mi modelo
+
     // Load models
     glm::mat4 projection = glm::perspective( camera.GetZoom( ), ( float )SCREEN_WIDTH/( float )SCREEN_HEIGHT, 0.1f, 100.0f );
     
@@ -122,7 +128,13 @@ int main( )
 
         // Draw the loaded model
         glm::mat4 model(1);
+        model = glm::rotate(model, glm::radians(-rot), glm::vec3(0.0f, 1.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        pokearriba.Draw(shader);
+        model = glm::mat4(1);
+        //model = glm::rotate(model, glm::radians(-rot), glm::vec3(0.0f, 1.0f, 0.0f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        pokeabajo.Draw(shader);
 
         // Swap the buffers
         glfwSwapBuffers( window );
@@ -155,6 +167,11 @@ void DoMovement( )
     if ( keys[GLFW_KEY_D] || keys[GLFW_KEY_RIGHT] )
     {
         camera.ProcessKeyboard( RIGHT, deltaTime );
+    }
+    if (keys[GLFW_KEY_SPACE])
+    {
+        rot += 0.5f;
+
     }
 
    
