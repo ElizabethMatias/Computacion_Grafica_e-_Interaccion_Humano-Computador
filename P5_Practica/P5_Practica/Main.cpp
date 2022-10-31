@@ -42,7 +42,7 @@ GLfloat lastFrame = 0.0f;
 
 //For Keyboard
 float rot = 0.0f;
-
+int i;
 
 int main( )
 {
@@ -128,13 +128,13 @@ int main( )
 
         // Draw the loaded model
         glm::mat4 model(1);
-        model = glm::rotate(model, glm::radians(-rot), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(-rot), glm::vec3(1.0f, 0.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         pokearriba.Draw(shader);
         model = glm::mat4(1);
-        //model = glm::rotate(model, glm::radians(-rot), glm::vec3(0.0f, 1.0f, 0.0f));
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         pokeabajo.Draw(shader);
+        glBindVertexArray(0);
 
         // Swap the buffers
         glfwSwapBuffers( window );
@@ -169,8 +169,22 @@ void DoMovement( )
         camera.ProcessKeyboard( RIGHT, deltaTime );
     }
     if (keys[GLFW_KEY_SPACE])
-    {
-        rot += 0.5f;
+    {   
+        //
+        if (rot == 0) {
+            i = 0;
+            while (rot<=90){
+                rot += 0.05f;
+                printf("%d \n", rot);
+            }
+        }
+        if (rot == 90) {
+            for (i = 90; i >=0; i--) {
+                rot += 0.5f;
+                printf("%d \n", rot);
+            }
+        }
+        
 
     }
 
